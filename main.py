@@ -9,11 +9,12 @@ load_dotenv()
 
 client_id = os.getenv("SPOTIPY_CLIENT_ID")
 client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
+redirect_uri = os.getenv("SPOTIPY_REDIRECT_URI")
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=client_id,
     client_secret=client_secret,
-    redirect_uri="http://127.0.0.1:8000/callback",
+    redirect_uri=redirect_uri,
     scope="user-read-currently-playing"
 ))
 
