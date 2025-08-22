@@ -36,3 +36,6 @@ CLIENT_SECRET=your_spotify_client_secret
 SPOTIPY_REDIRECT_URI=http://127.0.0.1:8000/callback
 ```
 Note: Replace `your_spotify_client_id` and `your_spotify_client_secret` with the values from your Spotify Developer application.
+
+## Finally
+Copy the given Spotify shortcut to your desktop and delete your old spotify shortcut.

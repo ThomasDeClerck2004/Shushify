@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client_id = os.getenv("SPOTIPY_CLIENT_ID")
-client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
-redirect_uri = os.getenv("SPOTIPY_REDIRECT_URI")
+client_id = os.getenv("CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
+redirect_uri = os.getenv("REDIRECT_URI")
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=client_id,
@@ -24,6 +24,7 @@ def spotify_api():
         if current_track['currently_playing_type'] == 'ad':
             return True
         else:
+            print(current_track['item']['name'])
             return False
     return False
 
@@ -40,4 +41,4 @@ def set_app_volume_low(app_name: str, is_ad: bool):
 while True:
     is_ad = spotify_api()
     set_app_volume_low("Spotify.exe", is_ad)
-    time.sleep(1)
+    time.sleep(1.5)
