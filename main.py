@@ -43,13 +43,16 @@ def spotify_api():
 # Function to set given application volume
 def set_app_volume_low(app_name: str, is_ad: bool):
     sessions = AudioUtilities.GetAllSessions()
-    for session in sessions:
-        if session.Process and session.Process.name().lower() == app_name.lower():
-            volume = session._ctl.QueryInterface(ISimpleAudioVolume)
-            if is_ad:
-                volume.SetMasterVolume(0.0, None)  # Mute during ad
-            else:
-                volume.SetMasterVolume(1.0, None)  # Full volume otherwise
+    try:
+        for session in sessions:
+            if session.Process and session.Process.name().lower() == app_name.lower():
+                volume = session._ctl.QueryInterface(ISimpleAudioVolume)
+                if is_ad:
+                    volume.SetMasterVolume(0.0, None)  # Mute during ad
+                else:
+                    volume.SetMasterVolume(1.0, None)  # Full volume otherwise
+    except Exception as e:
+        logging.error(f"Failed to set volume for {app_name}: {e}, is this app installed?")
 
 while True:
     is_ad = spotify_api()
