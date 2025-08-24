@@ -1,9 +1,17 @@
 import os
 import spotipy
 import time
+import logging
 from spotipy.oauth2 import SpotifyOAuth
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
 from dotenv import load_dotenv
+
+# Set up logging
+logging.basicConfig(
+    filename="shushify.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s: %(message)s"
+)
 
 load_dotenv()
 
@@ -18,16 +26,21 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope="user-read-currently-playing"
 ))
 
+# Function to check if an ad is playing
 def spotify_api():
     current_track = sp.current_user_playing_track()
-    if current_track is not None and current_track['is_playing']:
-        if current_track['currently_playing_type'] == 'ad':
-            return True
-        else:
-            print(current_track['item']['name'])
-            return False
-    return False
+    try:
+        if current_track is not None and current_track['is_playing']:
+            if current_track['currently_playing_type'] == 'ad':
+                return True
+            else:
+                return False
+        return False
+    except Exception as e:
+        logging.error(f"Spotify API request failed: {e}")
+        return False
 
+# Function to set given application volume
 def set_app_volume_low(app_name: str, is_ad: bool):
     sessions = AudioUtilities.GetAllSessions()
     for session in sessions:
