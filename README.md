@@ -1,4 +1,4 @@
-# Shushify
+# Shushify (windows only)
 ### You can run this script in the background while using Spotify to automatically mute ads.
 ## Requirements
 - Python 3.x
@@ -13,7 +13,7 @@
 First you will need to create a virtual environment (optional but recommended) do this in your terminal of your project directory:
 ```bash
 python -m venv venv
-venv\Scripts\Activate  # On Windows
+venv\Scripts\Activate
 ```
 Note: you need to install python first.
 
